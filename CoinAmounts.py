@@ -1,48 +1,58 @@
-Coins =   ("£2", "£1", "50p", "20p", "10p", "5p", "2p", "1p")
-Weight = ("12.00", "8.75", "8.00", "5.00", "6.50", "3.25", "7.12", "3.56")
-BagWeight = ("120.00", "175.00", "160.00", "250.00", "325.00 ??", "325.00", "356.00", "356.00")
+Data = open("Volunteer_Data.txt", "r")
 
-VolunteerName = input("What is your name?")
+Coin_Options = ("£2", "£1", "50p", "20p", "10p", "5p", "2p", "1p")
+Coin_Weight = ("12.00", "8.75", "8.00", "5.00", "6.50", "3.25", "7.12", "3.56")
+Bag_Weight = ("120.00", "175.00", "160.00", "250.00", "325.00", "325.00", "356.00", "356.00")
 
-CoinValidated = False
+Volunteer_Name = input("What is your name? ")
 
-while CoinValidated == False:
-    CoinType = input("What coin type is the bag full of? Please add £ to the start of your input or p to the end if in pence.").replace(" ","")
-    if ("£") not in CoinType and CoinType not in Coins or ("p") not in CoinType and CoinType not in Coins:
+# Name Validation, Check Data for pre-existing logs, 
+
+Coin_Validated = False # Defining Initial Coin Validation
+
+while Coin_Validated == False:
+    Coin = input("What coin type is the bag full of? Please add £ to the start of your input or p to the end if in pence. ").replace(" ","")
+    if Coin in Coin_Options:
+        Coin_Validated = True
+        Weight_Calculation = False
+    elif Coin not in Coin_Options:
         print("You have not put a valid coin input in, please try again.")
-    elif CoinType in Coins:
-        CoinValidated = True
-        print(CoinType)
     else: 
-        print("Coin Type Validation Error, Lines 11 - 19")
+        print("Stage 1: Coin Validation Error")
 
-RequiredWeightCalculation = False
+# Defining List Position And Required Weight
 
-while CoinValidated == True and RequiredWeightCalculation == False:
-    ListPosition = Coins.index(CoinType)
-    RequiredWeight = BagWeight[ListPosition]
-    RequiredWeightCalculation = True
-    print(RequiredWeight)
+while Weight_Calculation == False:
+    ListPosition = Coin_Options.index(Coin)
+    Required_Weight = Bag_Weight[ListPosition]
+    Required_Weight = int(float(Required_Weight))
+    Weight_Calculation = True
+    Weight_Validation = False
 
-ValidWeight = False
+# First Weight Validation 1/2 (Checking if coins can be added or removed)
+Valid_Input = False
+Valid_Weight = False
 
-
-# Fix weight validation to ensure if weight is either over or under that it is possible to resolve with more or less coins (Check for foreign objects)
-while ValidWeight == False:
+while Weight_Validation == False:
     Weight = int(input("What is the weight of the bag?"))
-    Weight = (f"{Weight:.2f}")
-    if Weight == RequiredWeight:
-        ValidWeight = True
-        print(f"The bag is the correct weight, thanks {VolunteerName}")
-    elif Weight > RequiredWeight:
-        CoinsToBeRemoved= RequiredWeight - Weight
-        CoinsToBeRemoved = CoinsToBeRemoved / Weight[ListPosition]
-        print(f"You must remove {CoinsToBeRemoved}, {Coins[ListPosition]} coins in order to have the correct bag weight.")
-    elif Weight < RequiredWeight:
-        CoinsToBeAdded = Weight - RequiredWeight
-        CoinsToBeAdded = CoinsToBeAdded / Weight[ListPosition]
-        print(f"You must add {CoinsToBeAdded}, {Coins[ListPosition]} coins in order to have the correct bag weight.")
-    else: 
-        print("Valid Weight Error Validation, Lines 29 - 38")
+    print(Required_Weight, ListPosition, Coin)
+    Weight_Validation = True
+    if Weight % 2 == 0:
+        Valid_Input = True
+        if Valid_Input == True and Weight < Required_Weight:
+            Add_Coins = Weight - Required_Weight
+            Add_Coins = Add_Coins / Coin_Weight[ListPosition]
+            print(f"You must add {Add_Coins} coins to have a valid weight.")
+        elif Valid_Input == True and Weight > Required_Weight:
+            Remove_Coins = Weight - Required_Weight
+            Remove_Coins = Remove_Coins / Coin_Weight[ListPosition]
+            print(f"You must remove {Remove_Coins} coins to have a valid weight.")
+        elif Weight == Required_Weight:
+            Weight_Validation = True
+            Valid_Weight = True
+    else:
+        print("Weight cannot be resolved by adding or removing coins, please check for foreign objects.")
+else:
+    ("Weight_Validation Error")
 
 
