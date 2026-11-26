@@ -1,7 +1,3 @@
-# Source - https://stackoverflow.com/a/287944
-# Posted by joeld, modified by community. See post 'Timeline' for change history
-# Retrieved 2026-11-26, License - CC BY-SA 4.0
-
 class bcolors:
     OKGREEN = '\033[92m'
     OKBLUE = '\033[94m'
@@ -18,7 +14,7 @@ Volunteer_Name = input(bcolors.OKBLUE + "What is your name? " + bcolors.ENDC).re
 
 # Name Validation, Check Data for pre-existing logs, 
 
-Coin_Validated = False # Defining Initial Coin Validation
+Coin_Validated = False 
 
 while Coin_Validated == False:
     Coin = input(bcolors.OKBLUE + "What coin type is the bag full of? Please add £ to the start of your input or p to the end if in pence. " + bcolors.ENDC).replace(" ","")
@@ -30,8 +26,6 @@ while Coin_Validated == False:
     else: 
         print(bcolors.WARNING + "Stage 1: Coin Validation Error" + bcolors.ENDC)
 
-# Defining List Position And Required Weight
-
 while Weight_Calculation == False:
     ListPosition = Coin_Options.index(Coin)
     Required_Weight = Bag_Weight[ListPosition]
@@ -39,7 +33,6 @@ while Weight_Calculation == False:
     Weight_Calculation = True
     Weight_Validation = False
 
-# First Weight Validation 1/2 (Checking if coins can be added or removed)
 Valid_Input = False
 Valid_Weight = False
 
@@ -79,7 +72,6 @@ while Weight_Validation == False:
         print(bcolors.WARNING + "Weight cannot be resolved by adding or removing coins, please check for foreign objects." + bcolors.ENDC)
 else:
     (bcolors.WARNING + "Weight_Validation Error" + bcolors.ENDC)
-
 
 # Name Validation and updating
 # List of total bags checked and total value, option to see it.
